@@ -1,0 +1,329 @@
+DROP DATABASE IF EXISTS eBay;
+CREATE DATABASE eBay;
+
+USE eBay;
+
+/****************************************************************/
+/******************** CREATE TABLE STATEMENTS *******************/
+/****************************************************************/
+
+CREATE TABLE Employee
+(
+	Emp_ID          INT                NOT NULL UNIQUE		AUTO_INCREMENT,
+    Emp_FName       CHAR(25)           NOT NULL,
+    Emp_LName       CHAR(25)           NOT NULL,
+    Emp_Type        CHAR(25)           NOT NULL,
+    Emp_Schedule    CHAR(25)           NOT NULL,
+    Emp_Email       VARCHAR(50)        NOT NULL,
+    Emp_PhoneNum    CHAR(25)           NOT NULL,
+    CONSTRAINT      Emp_PK	           PRIMARY KEY( Emp_ID )
+);
+
+CREATE TABLE Supplier
+(
+	Supp_ID			INT 			  NOT NULL UNIQUE		AUTO_INCREMENT,
+    Supp_Name		CHAR(25)		  NOT NULL,
+    Supp_Address	VARCHAR(50)		  NOT NULL,
+    Supp_Email		VARCHAR(50)		  NOT NULL,
+    Supp_PhoneNum	CHAR(10)		  NOT NULL,
+    Cost			CHAR(10)    	  NOT NULL,
+    CONSTRAINT      Supp_PK	          PRIMARY KEY( Supp_ID )
+);
+
+CREATE TABLE Product
+(
+	Prod_ID			INT 			  NOT NULL UNIQUE,
+    Prod_Name		CHAR(25)		  NOT NULL,
+    Prod_Price		CHAR(10)    	  NOT NULL,
+    Supp_ID			INT 		      NOT NULL,
+    Prod_Brand      CHAR(25)		  NOT NULL,
+    Prod_Category   CHAR(25)		  NOT NULL,
+    Prod_Qty		INT				  NOT NULL,
+    CONSTRAINT      Prod_PK    	      PRIMARY KEY( Prod_ID ),
+	CONSTRAINT      Prod_Supp_FK      FOREIGN KEY( Supp_ID ) 
+					REFERENCES        Supplier( Supp_ID) 
+);
+
+CREATE TABLE Orders
+(
+	Order_Num		INT 			  NOT NULL UNIQUE		AUTO_INCREMENT,
+    Prod_ID			INT 			  NOT NULL,
+    Order_Date 		CHAR(25) 		  NOT NULL,
+    Order_Time		TIME 			  NOT NULL,
+    Order_Qty		INT				  NOT NULL,
+    Order_Price		CHAR(10)    	  NOT NULL,
+    CONSTRAINT      Orders_PK	      PRIMARY KEY( Order_Num ),
+	CONSTRAINT      Orders_Prod_FK    FOREIGN KEY( Prod_ID ) 
+					REFERENCES        Product( Prod_ID)    
+);
+CREATE TABLE Customer
+(
+	Cust_ID			INT                NOT NULL UNIQUE		AUTO_INCREMENT,
+    Cust_LName      CHAR(25)           NOT NULL,
+    Cust_FName		CHAR(25)		   NOT NULL,
+    Cust_Email		VARCHAR(50)		   NOT NULL,
+    Cust_Address    VARCHAR(50)		   NOT NULL,
+    Cust_Username   CHAR(25)           NOT NULL,
+    Order_Num       INT 			   NOT NULL,
+    CONSTRAINT      Cust_PK	           PRIMARY KEY( Cust_ID ),
+	CONSTRAINT      Cust_Order_FK      FOREIGN KEY( Order_Num ) 
+					REFERENCES         Orders( Order_Num )    
+);
+
+CREATE TABLE Store
+(
+	Store_ID        INT            UNIQUE NOT NULL,
+	Cust_ID         INT            NOT NULL,
+	Emp_ID          INT            NOT NULL,
+	Supp_ID         INT            NOT NULL,
+    CONSTRAINT      Store_PK	   PRIMARY KEY( Store_ID ),
+    CONSTRAINT      Store_Cust_FK  FOREIGN KEY( Cust_ID ) 
+					REFERENCES     Customer( Cust_ID),
+    CONSTRAINT      Store_Emp_FK   FOREIGN KEY( Emp_ID ) 
+					REFERENCES     Employee( Emp_ID),
+    CONSTRAINT      Store_Supp_FK  FOREIGN KEY( Supp_ID ) 
+					REFERENCES     Supplier( Supp_ID)    
+);
+
+/******************************************************************/
+/************************* INSERT DATA ****************************/
+/******************************************************************/
+
+/* EMPLOYEE TABLE INSERTS */
+
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Yvette', 'Noe', 'Warehouse', 'Part Time', 'ynoe0@phoca.cz', '4331144530');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Dorris', 'Condict', 'Warehouse', 'Part Time', 'dcondict1@ustream.tv', '7705359825');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Deny', 'Hale', 'Office', 'Full Time', 'dhale2@walmart.com', '4952363010');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Darryl', 'Charlotte', 'Office', 'Part Time', 'dcharlotte3@cbc.ca', '5026319325');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Brandi', 'O'' Mara', 'Warehouse', 'Part Time', 'bomara4@hostgator.com', '8757626154');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Johny', 'Coggin', 'Office', 'Part Time', 'jcoggin5@posterous.com', '3695564911');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Blinnie', 'Gudger', 'Office', 'Part Time', 'bgudger6@nih.gov', '7776742806');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Irene', 'Roskams', 'Warehouse', 'Full Time', 'iroskams7@newsvine.com', '8994093781');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Hedi', 'Beney', 'Warehouse', 'Part Time', 'hbeney8@ucsd.edu', '5151285681');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Frederich', 'Sewards', 'Warehouse', 'Full Time', 'fsewards9@columbia.edu', '2181938370');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Llywellyn', 'Kleynen', 'Office', 'Full Time', 'lkleynena@wordpress.org', '9112092826');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Madeline', 'Bufton', 'Warehouse', 'Part Time', 'mbuftonb@uol.com.br', '3772753969');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Marney', 'Sainz', 'Office', 'Full Time', 'msainzc@geocities.jp', '5117329882');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Maure', 'Satterly', 'Office', 'Part Time', 'msatterlyd@cargocollective.com', '2543114573');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Valerye', 'Haukey', 'Warehouse', 'Full Time', 'vhaukeye@jugem.jp', '1301646083');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Bobby', 'Peer', 'Warehouse', 'Part Time', 'bpeerf@wordpress.org', '5292529253');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Reg', 'Dorrell', 'Office', 'Full Time', 'rdorrellg@cbsnews.com', '5114546718');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Wallace', 'Bristo', 'Warehouse', 'Part Time', 'wbristoh@about.com', '6062359325');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Corenda', 'Beahan', 'Office', 'Full Time', 'cbeahani@prlog.org', '9399171818');
+insert into Employee (Emp_ID, Emp_FName, Emp_LName, Emp_Type, Emp_Schedule, Emp_Email, Emp_PhoneNum) values (
+null, 'Zak', 'Whiffen', 'Office', 'Full Time', 'zwhiffenj@scribd.com', '8724618697');
+
+
+/* SUPPLIER TABLE INSERTS */
+
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Skipfire', '53029 Onsgard Terrace', 'rmerigon0@webnode.com', '8935643958', '$6.36');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Innotype', '27934 Prairie Rose Way', 'pweathers1@rambler.ru', '5509765317', '$8.71');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Shuffletag', '8099 Hazelcrest Circle', 'fmendoza2@sciencedirect.com', '5491364337', '$8.91');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Feedmix', '23 Onsgard Alley', 'pitzik3@un.org', '9223184121', '$1.80');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Yamia', '13 Warrior Drive', 'prubenovic4@nymag.com', '6008453422', '$9.73');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Yakijo', '1 Colorado Place', 'nnewcom5@4shared.com', '7734764849', '$9.16');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Realbuzz', '7 Nobel Road', 'bhabercham6@google.pl', '9811032992', '$8.42');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Fivebridge', '36532 Rowland Park', 'ihembrow7@webeden.co.uk', '9204012352', '$9.46');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Photobean', '43567 Oriole Drive', 'rmew8@cafepress.com', '6578247696', '$0.93');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Brightbean', '34 Surrey Circle', 'jglowach9@phpbb.com', '2066820108', '$0.63');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Youtags', '935 Utah Crossing', 'kbonicka@domainmarket.com', '9761132208', '$5.83');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Dabtype', '8 Bunker Hill Drive', 'nstaiteb@phoca.cz', '6877992266', '$1.34');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Riffpedia', '39741 Florence Place', 'ghoftonc@is.gd', '7188185926', '$6.83');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Kwideo', '89071 Mccormick Avenue', 'bamirandad@hao123.com', '8573826627', '$3.29');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Leexo', '0202 Di Loreto Drive', 'ccauleye@cloudflare.com', '2932847150', '$1.26');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Plajo', '7961 Mariners Cove Lane', 'phuettf@deviantart.com', '6986101031', '$6.39');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Flashspan', '65854 Schmedeman Trail', 'dmayorg@nationalgeographic.com', '4325110100', '$1.94');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Trudeo', '390 Granby Circle', 'prubelh@goo.gl', '5718309172', '$2.59');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Oyoba', '5674 Hollow Ridge Street', 'smandyi@bluehost.com', '2419092846', '$9.74');
+insert into Supplier (Supp_ID, Supp_Name, Supp_Address, Supp_Email, Supp_PhoneNum, Cost) values (
+null, 'Brainverse', '966 Quincy Circle', 'dborlandj@google.com', '5579279664', '$6.11');
+    
+/* PRODUCT TABLE INSERTS */
+
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+1, 'Polo', '$4.01', 1, 'H&M', 'Boy''s', 534);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+2, 'Jeans', '$0.18', 16, 'Callaway', 'Girl''s', 693);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+3, 'Polo', '$0.34', 3, 'Under Armour', 'Girl''s', 377);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+4, 'Pants', '$8.78', 9, 'Vineyard Vines', 'Girl''s', 356);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+5, 'Jacket', '$6.52', 2, 'Nike', 'Girl''s', 215);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+6, 'Polo', '$8.93', 20, 'Under Armour', 'Women''s', 336);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+7, 'Long Sleeve', '$3.25', 7, 'Tommy Hilfiger', 'Girl''s', 523);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+8, 'Jeans', '$0.58', 9, 'Tommy Hilfiger', 'Men''s', 447);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+9, 'Long Sleeve', '$7.65', 17, 'Untuckit', 'Men''s', 663);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+10, 'Polo', '$8.67', 4, 'Levi''s', 'Girl''s', 686);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+11, 'Jacket', '$9.58', 4, 'Vineyard Vines', 'Girl''s', 921);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+12, 'Jeans', '$3.73', 12, 'Under Armour', 'Girl''s', 874);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+13, 'Shorts', '$8.82', 9, 'Vineyard Vines', 'Girl''s', 560);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+14, 'Shirt', '$8.55', 16, 'Under Armour', 'Men''s', 10);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+15, 'Pants', '$4.85', 6, 'Tommy Hilfiger', 'Women''s', 429);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+16, 'Long Sleeve', '$2.01', 12, 'Levi''s', 'Boy''s', 155);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+17, 'Jacket', '$2.68', 3, 'Tommy Bahama', 'Girl''s', 11);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+18, 'Jacket', '$3.73', 15, 'Tommy Bahama', 'Men''s', 526);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+19, 'Shirt', '$4.10', 19, 'Nike', 'Women''s', 590);
+insert into Product (Prod_ID, Prod_Name, Prod_Price, Supp_ID, Prod_Brand, Prod_Category, Prod_Qty) values (
+20, 'Shorts', '$0.07', 18, 'H&M', 'Boy''s', 999);
+
+/* ORDERS TABLE INSERTS */
+
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 6, '2/20/2021', '12:26', 7, 242.56);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 18, '10/11/2021', '2:21', 1, 143.78);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 20, '1/3/2021', '14:06', 1, 434.8);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 13, '7/13/2021', '20:33', 4, 136.23);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 14, '2/16/2021', '6:56', 5, 358.84);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 3, '11/11/2020', '5:30', 8, 280.48);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 19, '3/15/2021', '18:46', 8, 445.72);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 15, '3/11/2021', '19:48', 7, 161.55);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 19, '4/14/2021', '16:30', 2, 126.99);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 17, '9/21/2021', '20:53', 8, 481.36);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 11, '1/4/2021', '19:30', 4, 365.67);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 5, '7/24/2021', '15:38', 9, 288.71);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 20, '8/25/2021', '18:55', 3, 249.46);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 17, '1/5/2021', '11:30', 1, 191.77);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 11, '1/22/2021', '3:53', 5, 207.68);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 16, '12/24/2020', '11:20', 10, 483.29);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 13, '2/7/2021', '14:52', 7, 207.69);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 18, '8/30/2021', '6:19', 4, 411.61);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 2, '11/24/2020', '20:59', 3, 84.42);
+insert into Orders (Order_Num, Prod_ID, Order_Date, Order_Time, Order_Qty, Order_Price) values (
+null, 5, '10/7/2021', '2:12', 8, 423.95);
+
+/* CUSTOMER TABLE INSERTS */
+
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Bozward', 'Parnell', 'pbozward0@rediff.com', '7 Chinook Park', 'pbozward0', 19);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Illem', 'Franciskus', 'fillem1@4shared.com', '5 Doe Crossing Park', 'fillem1', 6);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Padilla', 'Laryssa', 'lpadilla2@amazon.com', '9 Leroy Alley', 'lpadilla2', 9);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Lummus', 'Lonnie', 'llummus3@telegraph.co.uk', '63 Bellgrove Drive', 'llummus3', 6);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Daveley', 'Cristina', 'cdaveley4@nhs.uk', '784 Green Ridge Court', 'cdaveley4', 10);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Jeffry', 'Denys', 'djeffry5@hud.gov', '22 Steensland Plaza', 'djeffry5', 8);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Dabner', 'Fannie', 'fdabner6@noaa.gov', '5 Columbus Avenue', 'fdabner6', 3);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Jorck', 'Rayner', 'rjorck7@yellowbook.com', '13 Portage Circle', 'rjorck7', 19);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Feacham', 'Ricki', 'rfeacham8@tripadvisor.com', '3197 Stone Corner Way', 'rfeacham8', 18);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Atkirk', 'Vivien', 'vatkirk9@telegraph.co.uk', '171 2nd Circle', 'vatkirk9', 14);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Stobart', 'Cherri', 'cstobarta@multiply.com', '5776 Hayes Street', 'cstobarta', 11);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Sowerby', 'Maje', 'msowerbyb@1und1.de', '77261 4th Crossing', 'msowerbyb', 8);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Sikorsky', 'Ashli', 'asikorskyc@ifeng.com', '090 Warbler Place', 'asikorskyc', 18);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Oliva', 'Vite', 'volivad@live.com', '84 Vermont Plaza', 'volivad', 12);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Dominick', 'Romeo', 'rdominicke@rediff.com', '24 Westport Terrace', 'rdominicke', 9);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Lambdin', 'Elianora', 'elambdinf@gov.uk', '50628 Northland Street', 'elambdinf', 5);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Lambrecht', 'Verge', 'vlambrechtg@imgur.com', '059 Chive Crossing', 'vlambrechtg', 6);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Newdick', 'Travus', 'tnewdickh@themeforest.net', '8267 Waywood Street', 'tnewdickh', 5);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Parmby', 'Abel', 'aparmbyi@theguardian.com', '7645 Rockefeller Alley', 'aparmbyi', 14);
+insert into Customer (Cust_ID, Cust_LName, Cust_FName, Cust_Email, Cust_Address, Cust_Username, Order_Num) values (
+null, 'Sidnell', 'Christina', 'csidnellj@zimbio.com', '5 Melody Lane', 'csidnellj', 17);
+
+/* STORE TABLE INSERTS */
+
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (1, 10, 12, 1);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (2, 4, 20, 16);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (3, 6, 15, 18);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (4, 4, 15, 9);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (5, 19, 4, 17);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (6, 15, 6, 19);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (7, 13, 5, 9);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (8, 7, 5, 13);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (9, 4, 1, 20);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (10, 19, 19, 13);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (11, 1, 1, 4);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (12, 16, 1, 14);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (13, 20, 2, 15);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (14, 6, 1, 13);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (15, 14, 1, 17);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (16, 15, 11, 15);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (17, 16, 13, 18);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (18, 8, 6, 19);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (19, 2, 5, 20);
+insert into Store (Store_ID, Cust_ID, Emp_ID, Supp_ID) values (20, 13, 1, 2);
